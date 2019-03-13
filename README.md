@@ -125,7 +125,7 @@ YOUR CODE HERE
 ...  
 ravinos.set_stats(stats)
 ```
-*or*
+*ИЛИ*
 ```python
 import ravinos  
 stats = ro.get_stats()  
@@ -178,17 +178,15 @@ ravinos.set_stats(stats)
 Формирование ZIP архива доступно любыми удобными пользователю средствами.
 Структура архива:
 
-/*miner_dir*
+    /RAVINOS
 
->   /RAVINOS
+        /manifest.json
 
-/manifest.json
+        /start.py
 
-/start.py
+        /stats.py
 
-/stats.py
-
-/*miner_files*
+    /*miner_files*
 
 Интеграция Custom miner архива в систему RavinOS
 ------------------------------------------------
@@ -209,7 +207,7 @@ ravinos.set_stats(stats)
 
 ![](media/5b9ba505dbc9cde91b327822db036e5a.png)
 
-1.  Подтвердить добавление архива
+6.  Подтвердить добавление архива
 
     ![](media/5f7d5294775ff4b93394e1754c58d79e.png)
 
