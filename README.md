@@ -31,101 +31,164 @@
 
 ### Файл конфигурации пакета майнера **manifest.json**
 
+```json
+{
+  "package":"nbminer-21.0",
+  "name": "NBMiner",
+  "version": "21.0",
+  "description": "NBMiner 21.0",
+  "maintainer":"RavinOS (dev@ravinos.com)",
+  "platforms": ["nvidia"],
+  "dual_coin": false,
+  "algo": ["cuckaroo29", "ethash", "daggerhashimoto", "tensority", "cuckaroo31", "cuckoo"],
+  "executable": ["nbminer"],
+  "rev":1
+}
+```
+
 {  
 "package":"", 					// Имя пакета (должно совпадать с именем ZIP архива)  
-"name": "", 					// Название майнера  
+"name": "", 						// Название майнера  
 "version": "", 					// Версия майнера  
-"description": "", 				// Описание пакета  
+"description": "", 			// Описание пакета  
 "maintainer":"", 				// Информация о создателе пакета  
-"platforms": ["",…,""], 		// Поддерживаемые платформы  
-"dual_coin": **bool**, 			// Поддержка второй монеты  
-"algo": ["",…,""], 				// Поддерживаемые алгоритмы  
-"executable": [""], 			// Наименование исполняемого файла  
-"rev":int 						// Версия пакета  
+"platforms": ["",…,""], // Поддерживаемые платформы  
+"dual_coin": **bool**, 	// Поддержка второй монеты  
+"algo": ["",…,""], 			// Поддерживаемые алгоритмы  
+"executable": [""], 		// Наименование исполняемого файла  
+"rev":int 							// Версия пакета  
 }
 
-Скрипт запуска **start.py**
----------------------------
 
-> import ravinos
+### Скрипт запуска **start.py**
 
-> cfg = ravinos.get_config()  
+```python
+import ravinos
+cfg = ravinos.get_config()  
 ...
-
-> YOUR CODE HERE
-
-> ...  
-ravinos.run(command\_ line)
+YOUR CODE HERE
+...  
+ravinos.run(commandline)
+```
 
 **ravinos.get_config** функция возвращает объект конфигурации задачи для
 майнера, на основании указанных в системе параметров.
 
 {
 
-‘coins’: [ // Массив монет (index=0 - Primary, index=1 - Secondary (если есть)
+‘coins’: [
 
+> // Массив монет (index=0 - Primary, index=1 - Secondary (если есть)
 ‘coin_id’ : int,
+>
+‘pools’: [ 
 
-‘pools’: [
+> // Массив пулов
 
-‘url’: string, // Адрес пула
+‘url’: string,
 
-‘user’: string, // Имя пользователя
+> // Адрес пула
 
-‘password’: string, // Пароль пула
+‘user’: string,
 
-‘pool_type’: int, // Тип пула 0= Default, 1=Nicehash
+> // Имя пользователя
 
->   ]
+‘password’: string,
 
->   ‘algo’: string,
+> // Пароль пула
 
-],
+‘pool_type’: int,
 
-‘work_dir’: string, // Текущая рабочая директория
+> // Тип пула
 
-‘miner_dir’: string, // Директория майнера
+]
 
-‘args’: string, // Дополнительные аргументы командной строки
+‘algo’: string,
 
-‘api_port’: uint32, // Доступный порт для API майнера
-
-‘log_file’:string, // Путь к лог-файлу
-
-‘mpus’: [ // Массив MPU (miner process unit)
-
-‘id’:int32 , // Порядковый номер MPU по шине PCI (начинается с 0)
-
-‘id_by_type’:int32, // Порядковый номер по типу устройства (AMD, NVIDIA)
-(начинается с 0)
-
->   ‘openl_id’:int32, // Порядковый номер по OpenCL (начинается с 0)
-
-‘opencl_id_by_platform’:int32, // Порядковый номер по платформе OpenCL (AMD,
-NVIDIA) (начинается с 0)
-
-‘pci_id’:int32, // BUS ID
-
-‘pci’: string, // BUS ID (строка) 01:00.0
-
-‘type’:string, // Тип MPU (AMD, NVIDIA)
-
-‘name’:string, // Название MPU
-
-‘memory’:string, // Тип чипа памяти MPU (AMD)
-
-‘memory_size’:int64, // Доступный размер памяти MPU
+> // Алгоритм монеты
 
 ],
 
-‘platform’:string, //
+‘work_dir’: string, 
 
-‘user_config,omitempty’:string, // Контент пользовательского файла конфигурации
+> // Текущая рабочая директория
 
-‘intensity,omitempty’:string, // Интенсивность (указывается согласно настройкам
-майнера)
+‘miner_dir’: string, 
+
+> // Директория майнера
+
+‘args’: string, 
+
+> // Дополнительные аргументы командной строки
+
+‘api_port’: uint32, 
+
+> // Доступный порт для API майнера
+
+‘log_file’:string, 
+
+> // Путь к лог-файлу
+
+‘mpus’: [
+
+> // Массив MPU (miner process unit)
+
+‘id’:int32,
+
+> // Порядковый номер MPU по шине PCI (начинается с 0)
+
+‘id_by_type’:int32,
+
+> // Порядковый номер по типу устройства (AMD, NVIDIA)(начинается с 0)
+
+‘openl_id’:int32,
+
+> // Порядковый номер по OpenCL (начинается с 0)
+
+‘opencl_id_by_platform’:int32,
+
+> // Порядковый номер по платформе OpenCL (AMD, NVIDIA) (начинается с 0)
+
+‘pci_id’:int32,
+
+> // BUS ID
+
+‘pci’: string,
+
+> // BUS ID (строка) 01:00.0
+
+‘type’:string,
+
+> // Тип MPU (AMD, NVIDIA)
+
+‘name’:string,
+
+> // Название MPU
+
+‘memory’:string,
+
+> // Тип чипа памяти MPU (AMD)
+
+‘memory_size’:int64,
+
+> // Доступный размер памяти MPU
+
+],
+
+‘platform’:string,
+
+> //
+
+‘user_config,omitempty’:string,
+
+> // Контент пользовательского файла конфигурации
+
+‘intensity,omitempty’:string,
+
+> // Интенсивность (указывается согласно настройкам майнера)
 
 }
+
 
 **ravinos.run** запускает сформированную пользователем строку на исполнение
 
@@ -134,24 +197,25 @@ NVIDIA) (начинается с 0)
 Пример получения статистики raw socket **ro.get_socket_data** или web
 **ro.get_http_data**:
 
+```python
 import ravinos  
-  
 stats = ro.get_stats()  
-  
 ravinos.get_socket_data(stats[‘api_port’], ‘some_command’)
-
-*or*
-
-ravinos.get_http_data(‘url’)
-
 ...
-
 YOUR CODE HERE
-
 ...  
-  
 ravinos.set_stats(stats)
-
+```
+*or*
+```python
+import ravinos  
+stats = ro.get_stats()  
+ravinos.get_http_data(‘url’)
+...
+YOUR CODE HERE
+...  
+ravinos.set_stats(stats)
+```
 **ravinos.get_stats** функция получает объект статистики, который необходимо
 вернуть в функцию **ravinos.set_stats**:
 
@@ -191,7 +255,7 @@ NVIDIA) (начинается с 0)
 
 ]
 
-"errors":[]string, // массив ошибок
+"errors":[]string,             // массив ошибок
 
 "log_file":string , //
 
