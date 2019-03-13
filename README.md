@@ -73,7 +73,7 @@ ravinos.run(commandline)
 майнера, на основании указанных в системе параметров.
 ```GO
 {
-  "coins": [                        // Массив монет (index=0 - Primary, index=1 - Secondary (если есть)
+  "coins": [                        // Массив монет (index=0 - Primary, index=1 - Secondary
       "coin_id" : int,              //
       "pools": [                    // Массив пулов
           "url": string,            // Адрес пула
@@ -89,22 +89,23 @@ ravinos.run(commandline)
   "api_port": uint32,               // Доступный порт для API майнера
   "log_file":string,                // Путь к лог-файлу
   "mpus": [                         // Массив MPU (miner process unit)
-      "id":int32,                       // Порядковый номер MPU по шине PCI (начинается с 0)
-      "id_by_type":int32,               // Порядковый номер по типу устройства (AMD, NVIDIA)(начинается с 0)
-      "openl_id":int32,                 // Порядковый номер по OpenCL (начинается с 0)
-      "opencl_id_by_platform":int32,    // Порядковый номер по платформе OpenCL (AMD, NVIDIA) (начинается с 0)
-      "pci_id":int32,                   // BUS ID
-      "pci": string,                    // BUS ID (строка) 01:00.0
-      "type":string,                    // Тип MPU (AMD, NVIDIA)
-      "name":string,                    // Название MPU
-      "memory":string,                  // Тип чипа памяти MPU (AMD)
-      "memory_size":int64,              // Доступный размер памяти MPU
+      "id":int32,                   // Порядковый номер MPU по шине PCI
+      "id_by_type":int32,           // Порядковый номер по типу устройства (AMD, NVIDIA)
+      "openl_id":int32,             // Порядковый номер по OpenCL 
+      "opencl_id_by_platform":int32,// Порядковый номер по платформе OpenCL (AMD, NVIDIA)
+      "pci_id":int32,               // BUS ID
+      "pci": string,                // BUS ID (строка) 01:00.0
+      "type":string,                // Тип MPU (AMD, NVIDIA)
+      "name":string,                // Название MPU
+      "memory":string,              // Тип чипа памяти MPU (AMD)
+      "memory_size":int64,          // Доступный размер памяти MPU
   ],
   "platform":string,                //
   "user_config,omitempty":string,   // Контент пользовательского файла конфигурации
   "intensity,omitempty":string,     // Интенсивность (указывается согласно настройкам майнера)
 }
 ```
+*Все порядковые номера начинаются с 0
 
 **ravinos.run** запускает сформированную пользователем строку на исполнение
 
@@ -137,10 +138,10 @@ ravinos.set_stats(stats)
 ```GO
 {
     "mpu":[
-        "id":int32,                     // Порядковый номер MPU по шине PCI (начинается с 0)
-        "id_by_type":int32,             // Порядковый номер по типу устройства (AMD, NVIDIA)(начинается с 0)
-        "openl_id":int32,               // Порядковый номер по OpenCL (начинается с 0)
-        "opencl_id_by_platform":int32,  // Порядковый номер по платформе OpenCL (AMD, NVIDIA) (начинается с 0)
+        "id":int32,                     // Порядковый номер MPU по шине PCI*
+        "id_by_type":int32,             // Порядковый номер по типу устройства (AMD, NVIDIA)*
+        "openl_id":int32,               // Порядковый номер по OpenCL*
+        "opencl_id_by_platform":int32,  // Порядковый номер по платформе OpenCL (AMD, NVIDIA)*
         "pci_id":int32,                 // BUS ID
         "pci": string,                  // BUS ID (строка) 01:00.0
         "type":string,                  // Тип MPU (AMD, NVIDIA)
@@ -159,6 +160,8 @@ ravinos.set_stats(stats)
     "api_port":uint32,                  // Доступный порт для API майнера
 }
 ```
+*Все порядковые номера начинаются с 0
+
 **ravinos.get_socket_data** функция позволяет получить данные напрямую из сокета
 (в формате майнера). Принимает 2 параметра: порт API и команда для получения
 статистики (в формате майнера).
@@ -185,11 +188,11 @@ ravinos.set_stats(stats)
 
     /*miner_files*
 
-Интеграция Custom miner архива в систему RavinOS
+Интеграция Custom miner архива в систему *RavinOS*
 ------------------------------------------------
 
 После того как архив сформирован и все необходимые данные известны можно
-переходит к непосредственному добавлению майнера в систему RavinOS. Для этого
+переходит к непосредственному добавлению майнера в систему *RavinOS*. Для этого
 необходимо:
 
 1.  В меню слева выбрать пункт **Custom mining**
@@ -201,12 +204,10 @@ ravinos.set_stats(stats)
 4.  В открывшемся окне проводника выбрать ранее сформированный **zip** архив
 
 5.  Нажать **Открыть**
-
-![](media/5b9ba505dbc9cde91b327822db036e5a.png)
+    ![](media/5b9ba505dbc9cde91b327822db036e5a.png)
 
 6.  Подтвердить добавление архива
-
-    ![](media/5f7d5294775ff4b93394e1754c58d79e.png)
+      ![](media/5f7d5294775ff4b93394e1754c58d79e.png)
 
 Если все сделано верно, то новый добавленный майнер отобразится в списке на
 текущей вкладке.
@@ -254,24 +255,24 @@ ravinos.set_stats(stats)
 
 3.  Нажать **Add**
 
-![](media/58bf21fc544639eb744e4cd3c1d5afc5.png)
+    ![](media/58bf21fc544639eb744e4cd3c1d5afc5.png)
 
-1.  В открывшейся форме заполнить данные:
+4.  В открывшейся форме заполнить данные:
 
-```
-    -   pool Name           // наименование пула
-    -   Ewal template       // шаблон кошелька
-    -   URL template        // шаблон URL
-    -   Select auth type    // выбор типа авторизации на пуле
-    -   Is Nicehash         // указание типа сервера nicehash
-    -   Select coin         // выбор монет(ы)
-    -   Add new url         // добавление URL
-```
-![](media/b496ff41e1f1325209977f7421060c99.png)
+    ```
+        -   pool Name           // наименование пула
+        -   Ewal template       // шаблон кошелька
+        -   URL template        // шаблон URL
+        -   Select auth type    // выбор типа авторизации на пуле
+        -   Is Nicehash         // указание типа сервера nicehash
+        -   Select coin         // выбор монет(ы)
+        -   Add new url         // добавление URL
+    ```
+    ![](media/b496ff41e1f1325209977f7421060c99.png)
 
-1.  Нажать **Save** (станет активной после заполнения формы)
-
-![](media/8c4d8022bf7189d400114b8297cc54d5.png)
+5.  Нажать **Save** (станет активной после заполнения формы)
+    
+    ![](media/8c4d8022bf7189d400114b8297cc54d5.png)
 
 Если все сделано верно, то новый пул отобразится в списке на текущей вкладке.
 
@@ -280,7 +281,7 @@ ravinos.set_stats(stats)
 Дополнительный набор функций (\_init_\.py)
 =======================
 
-Следующие функции в модуле ravinos предоставляются для удобства пользователя
+Следующие функции в модуле *ravinos* предоставляются для удобства пользователя
 
 **ravinos.get_by_type**(devs, type) 
 
@@ -312,9 +313,10 @@ ravinos.set_stats(stats)
    STRATUM_MODE_MINER_PROXY = 0b00000000000000000000000001000000
    STRATUM_MODE_NICEHASH    = 0b00000000000000000000000010000000
 ```
+
 **ravinos.url_parse**(url)
 
 Принимает URL адрес пула. При необходимости добавляет схему для дальныйшего корректного 
 разбора адреса на составляющие.
 
-Разбирает URL и возвращает 6 компонентов как стандартная функция **urlparse**
+Разбирает адрес и возвращает 6 компонентов URL как стандартная функция **urlparse**
