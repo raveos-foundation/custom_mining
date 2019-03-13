@@ -45,20 +45,21 @@
   "rev":1
 }
 ```
-
+Описание параметров конфигурации:
+```GO
 {  
-"package":"", 					// Имя пакета (должно совпадать с именем ZIP архива)  
-"name": "", 						// Название майнера  
-"version": "", 					// Версия майнера  
-"description": "", 			// Описание пакета  
-"maintainer":"", 				// Информация о создателе пакета  
-"platforms": ["",…,""], // Поддерживаемые платформы  
-"dual_coin": **bool**, 	// Поддержка второй монеты  
-"algo": ["",…,""], 			// Поддерживаемые алгоритмы  
-"executable": [""], 		// Наименование исполняемого файла  
-"rev":int 							// Версия пакета  
+    "package":"",           // Имя пакета (должно совпадать с именем ZIP архива)  
+    "name": "",             // Название майнера  
+    "version": "",          // Версия майнера  
+    "description": "",      // Описание пакета  
+    "maintainer":"",        // Информация о создателе пакета  
+    "platforms": ["",…,""], // Поддерживаемые платформы  
+    "dual_coin": bool,      // Поддержка второй монеты  
+    "algo": ["",…,""],      // Поддерживаемые алгоритмы  
+    "executable": [""],     // Наименование исполняемого файла  
+    "rev":int               // Версия пакета  
 }
-
+```
 
 ### Скрипт запуска **start.py**
 
@@ -71,124 +72,42 @@ YOUR CODE HERE
 ravinos.run(commandline)
 ```
 
-**ravinos.get_config** функция возвращает объект конфигурации задачи для
+**ravinos.get_config** функция возвращает объект конфигурации задачи для 
 майнера, на основании указанных в системе параметров.
-
+```GO
 {
-
-‘coins’: [
-
-> // Массив монет (index=0 - Primary, index=1 - Secondary (если есть)
-‘coin_id’ : int,
->
-‘pools’: [ 
-
-> // Массив пулов
-
-‘url’: string,
-
-> // Адрес пула
-
-‘user’: string,
-
-> // Имя пользователя
-
-‘password’: string,
-
-> // Пароль пула
-
-‘pool_type’: int,
-
-> // Тип пула
-
-]
-
-‘algo’: string,
-
-> // Алгоритм монеты
-
-],
-
-‘work_dir’: string, 
-
-> // Текущая рабочая директория
-
-‘miner_dir’: string, 
-
-> // Директория майнера
-
-‘args’: string, 
-
-> // Дополнительные аргументы командной строки
-
-‘api_port’: uint32, 
-
-> // Доступный порт для API майнера
-
-‘log_file’:string, 
-
-> // Путь к лог-файлу
-
-‘mpus’: [
-
-> // Массив MPU (miner process unit)
-
-‘id’:int32,
-
-> // Порядковый номер MPU по шине PCI (начинается с 0)
-
-‘id_by_type’:int32,
-
-> // Порядковый номер по типу устройства (AMD, NVIDIA)(начинается с 0)
-
-‘openl_id’:int32,
-
-> // Порядковый номер по OpenCL (начинается с 0)
-
-‘opencl_id_by_platform’:int32,
-
-> // Порядковый номер по платформе OpenCL (AMD, NVIDIA) (начинается с 0)
-
-‘pci_id’:int32,
-
-> // BUS ID
-
-‘pci’: string,
-
-> // BUS ID (строка) 01:00.0
-
-‘type’:string,
-
-> // Тип MPU (AMD, NVIDIA)
-
-‘name’:string,
-
-> // Название MPU
-
-‘memory’:string,
-
-> // Тип чипа памяти MPU (AMD)
-
-‘memory_size’:int64,
-
-> // Доступный размер памяти MPU
-
-],
-
-‘platform’:string,
-
-> //
-
-‘user_config,omitempty’:string,
-
-> // Контент пользовательского файла конфигурации
-
-‘intensity,omitempty’:string,
-
-> // Интенсивность (указывается согласно настройкам майнера)
-
+  "coins": [                        // Массив монет (index=0 - Primary, index=1 - Secondary (если есть)
+      "coin_id" : int,              //
+      "pools": [                    // Массив пулов
+          "url": string,            // Адрес пула
+          "user": string,           // Имя пользователя
+          "password": string,       // Пароль пула
+          "pool_type": int,         // Тип пула
+      ],
+  "algo": string,                   // Алгоритм монеты
+  ],
+  "work_dir": string,               // Текущая рабочая директория
+  "miner_dir": string,              // Директория майнера
+  "args": string,                   // Дополнительные аргументы командной строки
+  "api_port": uint32,               // Доступный порт для API майнера
+  "log_file":string,                // Путь к лог-файлу
+  "mpus": [                         // Массив MPU (miner process unit)
+  "id":int32,                       // Порядковый номер MPU по шине PCI (начинается с 0)
+  "id_by_type":int32,               // Порядковый номер по типу устройства (AMD, NVIDIA)(начинается с 0)
+  "openl_id":int32,                 // Порядковый номер по OpenCL (начинается с 0)
+  "opencl_id_by_platform":int32,    // Порядковый номер по платформе OpenCL (AMD, NVIDIA) (начинается с 0)
+  "pci_id":int32,                   // BUS ID
+  "pci": string,                    // BUS ID (строка) 01:00.0
+  "type":string,                    // Тип MPU (AMD, NVIDIA)
+  "name":string,                    // Название MPU
+  "memory":string,                  // Тип чипа памяти MPU (AMD)
+  "memory_size":int64,              // Доступный размер памяти MPU
+  ],
+  "platform":string,                //
+  "user_config,omitempty":string,   // Контент пользовательского файла конфигурации
+  "intensity,omitempty":string,     // Интенсивность (указывается согласно настройкам майнера)
 }
-
+```
 
 **ravinos.run** запускает сформированную пользователем строку на исполнение
 
@@ -218,55 +137,31 @@ ravinos.set_stats(stats)
 ```
 **ravinos.get_stats** функция получает объект статистики, который необходимо
 вернуть в функцию **ravinos.set_stats**:
-
+```GO
 {
-
-"mpu":[
-
-‘id’:int32 , // Порядковый номер MPU по шине PCI (начинается с 0)
-
-‘id_by_type’:int32, // Порядковый номер по типу устройства (AMD, NVIDIA)
-(начинается с 0)
-
->   ‘openl_id’:int32, // Порядковый номер по OpenCL (начинается с 0)
-
-‘opencl_id_by_platform’:int32, // Порядковый номер по платформе OpenCL (AMD,
-NVIDIA) (начинается с 0)
-
-‘pci_id’:int32, // BUS ID
-
-‘pci’: string, // BUS ID (строка) 01:00.0
-
-‘type’:string, // Тип MPU (AMD, NVIDIA)
-
-"hash_rate1":float64, // хешрейт первой монеты
-
-"hash_rate2":float64, // хешрейт второй монеты (если есть)
-
-"temp,omitempty":int32,
-
-]
-
-"fans,omitempty":[
-
->   "percent":int32,
-
-"rpm":int32,
-
-]
-
-"errors":[]string,             // массив ошибок
-
-"log_file":string , //
-
-"last_log_file_size":int64, //
-
-"have_driver_error":bool, //
-
-"api_port":uint32, // Доступный порт для API майнера
-
+    "mpu":[
+        "id":int32,                     // Порядковый номер MPU по шине PCI (начинается с 0)
+        "id_by_type":int32,             // Порядковый номер по типу устройства (AMD, NVIDIA)(начинается с 0)
+        "openl_id":int32,               // Порядковый номер по OpenCL (начинается с 0)
+        "opencl_id_by_platform":int32,  // Порядковый номер по платформе OpenCL (AMD, NVIDIA) (начинается с 0)
+        "pci_id":int32,                 // BUS ID
+        "pci": string,                  // BUS ID (строка) 01:00.0
+        "type":string,                  // Тип MPU (AMD, NVIDIA)
+        "hash_rate1":float64,           // хешрейт первой монеты
+        "hash_rate2":float64,           // хешрейт второй монеты (если есть)
+        "temp,omitempty":int32,
+    ]
+    "fans,omitempty":[
+        "percent":int32,
+        "rpm":int32,
+    ]
+    "errors":[]string,                  // массив ошибок
+    "log_file":string,                  //
+    "last_log_file_size":int64,         //
+    "have_driver_error":bool,           //
+    "api_port":uint32,                  // Доступный порт для API майнера
 }
-
+```
 **ravinos.get_socket_data** функция позволяет получить данные напрямую из сокета
 (в формате майнера). Принимает 2 параметра: порт API и команда для получения
 статистики (в формате майнера).
