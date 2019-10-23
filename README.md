@@ -118,12 +118,12 @@ ravinos.run(commandline)
 
 ### Script to get statistics **stats.py**
 
-Example of obtaining statistics *raw socket* **ro.get_socket_data** or *web*
-**ro.get_http_data**:
+Example of obtaining statistics *raw socket* **ravinos.get_socket_data** or *web*
+**ravinos.get_http_data**:
 
 ```python
 import ravinos  
-stats = ro.get_stats()  
+stats = ravinos.get_stats()  
 ravinos.get_socket_data(stats[‘api_port’], ‘some_command’)
 ...
 YOUR CODE HERE
@@ -133,8 +133,8 @@ ravinos.set_stats(stats)
 *OR*
 ```python
 import ravinos  
-stats = ro.get_stats()  
-ravinos.get_http_data(‘url’)
+stats = ravinos.get_stats()  
+ravinos.get_http_data(url)
 ...
 YOUR CODE HERE
 ...  
