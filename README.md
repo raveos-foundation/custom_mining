@@ -1,32 +1,34 @@
-## Использование Custom mining в RavinOS.
+## Использование Custom mining в RaveOS.
 
-Система *RavinOS* позволяет использовать сторонние алгоритмы для майнинга и
-добычи кастомных монет. Для использования фунционала Custom Mining пользователю
-необходимы:
+майнинга
 
-1.  ZIP архив с майнером, включающий в себя:
+The *RaveOS* allows you to use third-party algorithms for mining custom coins. Custom Mining requires:
 
-    - файлы майнера
-    - каталог **RAVINOS** c файлом конфигурации пакета майнера **manifest.json** и двумя файлами скрипта на языке **python** (**start.py** и **stats.py**).
+1.  ZIP archive with miner, including:
+    
+    - miner files
+    - directory **RAVINOS** in which the configuration file of the miner package **manifest.json** and two other scripts in **python** (**start.py** and **stats.py**). 
+       
+    The structure of the files in detail is described below in the appropriate section.
 
-    Структура файлов подробнее – в соответствующем разделе.
+2.  Coin info: algorithm and name
 
-2.  Данные монеты: алгоритм и тип
+3.  Pool data:
 
-3.  Данные пула:
-
-    -   Шаблон адреса пула
-    -   Тип авторизации на пуле
-    -   Данные для авторизации на пуле (адрес, Порт, Кошелек, имя пользователя,
-        пароль и т д.)
-
-Добавление Custom Miner
+    - pool name
+    - Ewal template
+    - URL template
+    - Authorization type on the pool
+    - Data for authorization on the pool (address, Port, Wallet, username,
+        password, and so on.)
+        
+Adding Custom Miner
 =======================
 
-Файлы каталога RAVINOS
+RAVINOS directory files
 ----------------------
 
-### Файл конфигурации пакета майнера **manifest.json**
+### Miner package configuration file **manifest.json**
 
 ```json
 {
@@ -45,20 +47,20 @@
 Описание параметров конфигурации:
 ```GO
 {  
-    "package":"",           // Имя пакета (должно совпадать с именем ZIP архива)  
-    "name": "",             // Название майнера  
-    "version": "",          // Версия майнера  
-    "description": "",      // Описание пакета  
-    "maintainer":"",        // Информация о создателе пакета  
-    "platforms": ["",…,""], // Поддерживаемые платформы  
-    "dual_coin": bool,      // Поддержка второй монеты  
-    "algo": ["",…,""],      // Поддерживаемые алгоритмы  
-    "executable": [""],     // Наименование исполняемого файла  
-    "rev":int               // Версия пакета  
+    "package":"",           // Package name (same as ZIP archive name)  
+    "name": "",             // Miner name  
+    "version": "",          // Miner version  
+    "description": "",      // Package description  
+    "maintainer":"",        // developer info  
+    "platforms": ["",…,""], // Platforms miner can work with (AMD, NVIDIA)  
+    "dual_coin": bool,      // Support of the second coin  
+    "algo": ["",…,""],      // Supported algorithms  
+    "executable": [""],     // The name of the executable file  
+    "rev":int               // Package version  
 }
 ```
 
-### Скрипт запуска **start.py**
+### The startup script **start.py**
 
 ```python
 import ravinos
@@ -69,49 +71,57 @@ YOUR CODE HERE
 ravinos.run(commandline)
 ```
 
-**ravinos.get_config** функция возвращает объект конфигурации задачи для 
-майнера, на основании указанных в системе параметров.
+**ravinos.get_config** the function returns a task configuration object for miner, based on the parameters specified in the system.
 ```GO
 {
-  "coins": [                        // Массив монет (index=0 - Primary, index=1 - Secondary
+  "auth_config": {                  // Contains authorization data for the pool
+  	"login": string,                 
+	"ewal": string,
+	"worker": string,
+	"email": string,
+	"pass":	string,
+	}
+  "coins": [                        // An array of coins (index=0 - Primary, index=1 - Secondary
       "coin_id" : int,              //
-      "pools": [                    // Массив пулов
-          "url": string,            // Адрес пула
-          "user": string,           // Имя пользователя
-          "password": string,       // Пароль пула
-          "pool_type": int,         // Тип пула
+      "pools": [                    // An array of pools
+          "url": string,            // Pool address
+          "user": string,           // User name
+          "password": string,       // The pool password
+          "pool_type": int,         // The type of a pool
       ],
-  "algo": string,                   // Алгоритм монеты
+  "wallet id": int,                 // Wallet db id
+  "algo": string,                   // The algorithm of the coin
+  "coin_id": ing,                   // Coin db id
+  "name": string,                   // Coin short name
   ],
-  "work_dir": string,               // Текущая рабочая директория
-  "miner_dir": string,              // Директория майнера
-  "args": string,                   // Дополнительные аргументы командной строки
-  "api_port": uint32,               // Доступный порт для API майнера
-  "log_file":string,                // Путь к лог-файлу
-  "mpus": [                         // Массив MPU (miner process unit)
-      "id":int32,                   // Порядковый номер MPU по шине PCI
-      "id_by_type":int32,           // Порядковый номер по типу устройства (AMD, NVIDIA)
-      "openl_id":int32,             // Порядковый номер по OpenCL 
-      "opencl_id_by_platform":int32,// Порядковый номер по платформе OpenCL (AMD, NVIDIA)
+  "work_dir": string,               // Current working directory
+  "miner_dir": string,              // Directory of miner
+  "args": string,                   // Additional command line arguments
+  "api_port": uint32,               // Available port for miner API
+  "log_file":string,                // The path to the log file
+  "mpus": [                         // An array of MPU (miner process unit)
+      "id":int32,                   // The sequence number of the MPU by the PCI bus
+      "id_by_type":int32,           // Serial number by device type (AMD, NVIDIA)
+      "openl_id":int32,             // OpenCL sequence number
       "pci_id":int32,               // BUS ID
       "pci": string,                // BUS ID (строка) 01:00.0
-      "type":string,                // Тип MPU (AMD, NVIDIA)
-      "name":string,                // Название MPU
-      "memory":string,              // Тип чипа памяти MPU (AMD)
-      "memory_size":int64,          // Доступный размер памяти MPU
+      "type":string,                // MPU type (AMD, NVIDIA)
+      "name":string,                // MPU name
+      "memory":string,              // The type of memory chip MPU (AMD)
+      "memory_size":int64,          // Available memory size MPU
   ],
   "platform":string,                //
-  "user_config,omitempty":string,   // Контент пользовательского файла конфигурации
-  "intensity,omitempty":string,     // Интенсивность (указывается согласно настройкам майнера)
+  "user_config,omitempty":string,   // The content of a custom configuration file
+  "intensity,omitempty":string,     // Intensity (specified according to miner settings)
 }
 ```
-*Все порядковые номера начинаются с 0
+*All sequence numbers start with 0
 
-**ravinos.run** запускает сформированную пользователем строку на исполнение
+**ravinos.run** returns the generated string to the program
 
-### Скрипт получения статистики **stats.py**
+### Script to get statistics **stats.py**
 
-Пример получения статистики raw socket **ro.get_socket_data** или web
+Example of obtaining statistics *raw socket* **ro.get_socket_data** or *web*
 **ro.get_http_data**:
 
 ```python
@@ -133,50 +143,55 @@ YOUR CODE HERE
 ...  
 ravinos.set_stats(stats)
 ```
-**ravinos.get_stats** функция получает объект статистики, который необходимо
-вернуть в функцию **ravinos.set_stats**:
+**ravinos.get_stats** the function gets a statistics object that should to return to the function **ravinos.set_stats**:
 ```GO
 {
     "mpu":[
-        "id":int32,                     // Порядковый номер MPU по шине PCI*
-        "id_by_type":int32,             // Порядковый номер по типу устройства (AMD, NVIDIA)*
-        "openl_id":int32,               // Порядковый номер по OpenCL*
-        "opencl_id_by_platform":int32,  // Порядковый номер по платформе OpenCL (AMD, NVIDIA)*
+        "id":int32,                     // The sequence number of the MPU by PCI bus*
+        "id_by_type":int32,             // Serial number by device type (AMD, NVIDIA)*
+        "openl_id":int32,               // OpenCL sequence number*
         "pci_id":int32,                 // BUS ID
         "pci": string,                  // BUS ID (строка) 01:00.0
-        "type":string,                  // Тип MPU (AMD, NVIDIA)
-        "hash_rate1":float64,           // хешрейт первой монеты
-        "hash_rate2":float64,           // хешрейт второй монеты (если есть)
+        "type":string,                  // MPU type (AMD, NVIDIA)
+        "hash_rate1":float64,           // hashrate of the first coin
+        "hash_rate2":float64,           // hashrate of the second coin (if exist)
         "temp,omitempty":int32,
+        "shares": {                     // shares produced (by MPU)
+        	"accepted": int,
+        	"invalid": int,
+        	"rejected": int,            
+        }
     ]
     "fans,omitempty":[
         "percent":int32,
         "rpm":int32,
     ]
-    "errors":[]string,                  // массив ошибок
+    "shares": {                     // shares produced (by task)
+        "accepted": int,
+        "invalid": int,
+        "rejected": int,            
+    }
+    "errors":[]string,                  // array contains errors
     "log_file":string,                  //
     "last_log_file_size":int64,         //
     "have_driver_error":bool,           //
-    "api_port":uint32,                  // Доступный порт для API майнера
+    "api_port":uint32,                  // Available port for miner API
+    "last_log_file_size":               // The last known size of the miner log file 
 }
 ```
-*Все порядковые номера начинаются с 0
+*All sequence numbers start with 0
 
-**ravinos.get_socket_data** функция позволяет получить данные напрямую из сокета
-(в формате майнера). Принимает 2 параметра: порт API и команда для получения
-статистики (в формате майнера).
+**ravinos.get_socket_data** the function allows you to get data directly from the socket (format depends on the miner). Takes 2 parameters: API port and command to get statistics (format depends on the miner).
 
-**ravinos.get_http_data** функция позволяет получить данные по http протоколу (в
-формате майнера). Принимает 1 параметр: URL статистики.
+**ravinos.get_http_data** the function allows you to receive data via http (format depends on the miner). Takes 1 parameter: statistics URL.
 
-**ravinos.set_stats** функция принимает, сформированный кодом пользователя,
-объект статистики и передает его в систему.
+**ravinos.set_stats** the function takes the statistics object generated by the user code and passes it to the system.
 
-Формирование ZIP архива
+Formation of ZIP archive
 -----------------------
 
-Формирование ZIP архива доступно любыми удобными пользователю средствами.
-Структура архива:
+Formation of ZIP archive is available by any means convenient to the user.
+The archive structure:
 
     /RAVINOS
 
@@ -188,120 +203,112 @@ ravinos.set_stats(stats)
 
     /*miner_files*
 
-Интеграция Custom miner архива в систему *RavinOS*
+Integration of the Custom miner archive into the *RaveOS*
 ------------------------------------------------
 
-После того как архив сформирован и все необходимые данные известны можно
-переходит к непосредственному добавлению майнера в систему *RavinOS*. Для этого
-необходимо:
+Once the archive is formed and all the necessary data is known you can proceed to the direct addition of the miner to the system *RaveOS*. 
 
-1.  В меню слева выбрать пункт **Custom mining**
+1.  In the left menu, select **Custom mining**
 
-2.  Перейти на вкладку **MINERS**
+2.  Go to the **MINERS** tab
 
-3.  Нажать **Add**
+3.  Click **Add**
 
-4.  В открывшемся окне проводника выбрать ранее сформированный **zip** архив
+4.  In the Explorer window select the previously generated **zip** archive
 
-5.  Нажать **Открыть**
-    ![](media/5b9ba505dbc9cde91b327822db036e5a.png)
+5.  Click **Open**
+    ![](media/1.png)
 
-6.  Подтвердить добавление архива
-      ![](media/5f7d5294775ff4b93394e1754c58d79e.png)
+6.  Confirm archive addition
+      ![](media/2.png)
 
-Если все сделано верно, то новый добавленный майнер отобразится в списке на
-текущей вкладке.
+If everything is done correctly, the newly added miner will appear in the list on the current tab.
 
-![](media/29056cc2f20c37356f57fa98aa86c899.png)
+![](media/3.png)
 
-Добавление Custom Coin
+Adding Custom Coin
 ======================
 
-Для добавления Custom Coin (кастомной монеты):
+For adding Custom Coin:
 
-1.  В меню слева выбрать пункт **Custom mining**
+1.  In the left menu, select **Custom mining**
 
-2.  Перейти на вкладку **COINS**
+2.  Go to the **COINS** tab
 
-3.  Нажать **Add**
+3.  Click  **Add**
 
-![](media/b4b37c3d7e3ecb7e26529eabbf3a47a5.png)
+    ![](media/4.png)
 
-1.  В открывшейся форме заполнить данные:
+4. In the form that opens, fill in the data:
 ```
-    -   Coin Name       // наименование монеты
-    -   Short Name      // сокращение имени монеты
-    -   Select algo     // выбор алгоритма монеты
-    -   Is Nicehash     // флаг для Nicehash монет
+    -   Coin Name       // Coin name
+    -   Short Name      // Coin short name
+    -   Select algo     // Choose coin algo
 ```
-![](media/d33b98c5985d05e2b72f4986305c5d31.png)
+Click * * Save** (will become active after filling out the form)
+![](media/5.png)
 
-1.  Нажать **Save** (станет активной после заполнения формы)
+If done correctly, the new coin will appear in the list on the current tab.
 
-![](media/4a373e17ba10dda596c683f8e9c5f490.png)
+![](media/6.png)
 
-Если все сделано верно, то новая монета отобразится в списке на текущей вкладке.
-
-![](media/40bbc92c516bd3951f20cc705e4e41cc.png)
-
-Добавление Custom Pool
+Adding Custom Pool
 ======================
 
-Для добавления Custom Pool (кастомного пула):
+To add a Custom Pool:
 
-1.  В меню слева выбрать пункт **Custom mining**
+1.  In the left menu, select **Custom mining**
 
-2.  Перейти на вкладку **POOLS**
+2.  Go to the **POOLS** tab
 
-3.  Нажать **Add**
+3.  Click **Add**
 
-    ![](media/58bf21fc544639eb744e4cd3c1d5afc5.png)
+    ![](media/7.png)
 
-4.  В открывшейся форме заполнить данные:
+4.  In the form that opens, fill in the data:
 
     ```
-        -   pool Name           // наименование пула
-        -   Ewal template       // шаблон кошелька
-        -   URL template        // шаблон URL
-        -   Select auth type    // выбор типа авторизации на пуле
-        -   Is Nicehash         // указание типа сервера nicehash
-        -   Select coin         // выбор монет(ы)
-        -   Add new url         // добавление URL
+        -   pool Name           // Pool name
+        -   Ewal template       // wallet template
+        -   URL template        // URL template
+        -   Select auth type    // select the authorization type on the pool
+        -   Choose coin         // choose coin
+        -   Pool mode           // choose pool mode
+        -   Connection type     // choose pool connection type
+        -   Add new url         // Adding URL
     ```
-    ![](media/b496ff41e1f1325209977f7421060c99.png)
+    ![](media/8.png)
 
-5.  Нажать **Save** (станет активной после заполнения формы)
-    
-    ![](media/8c4d8022bf7189d400114b8297cc54d5.png)
+5.  Click * * Save** (will become active after filling out the form)
+     
+If done correctly, the new pool will appear in the list on the current tab.
 
-Если все сделано верно, то новый пул отобразится в списке на текущей вкладке.
+![](media/9.png)
 
-![](media/b244af83d581a4ae773c9d6d24f852d1.png)
-
-Дополнительный набор функций (\_init_\.py)
+An additional set of functions (\_init_\.py)
 =======================
 
-Следующие функции в модуле *ravinos* предоставляются для удобства пользователя
+The following features in the *ravinos* module are provided for user convenience
 
 **ravinos.get_by_type**(devs, type) 
 
-Принимает список устройств и тип. type может принимать значения (AMD, NVIDIA, MIXED).
+Takes a list of devices and type. type can take values (AMD, NVIDIA, MIXED).
 
-Возвращает массив GPU выбранного типа. При указании типа MIXED сортирует возвращаемый массив. 
+Returns an array of the GPU of the selected type. When specified MIXED - sorts the returned array.
 
 **ravinos.sort_devs**(devs, sort_by) 
 
-Принимает список устройств и метод сортировки.
+Accepts a list of devices and a sorting method.
 
-Возвращает отсортированный массив устройств.
+Returns a sorted array of devices.
 
 **ravinos.get_pool_type**(val)
 
-Принимает числовое значение. Параметр содержащий в себе данные о типе пула и наличии шифрования и его типе.
+Takes a numeric value. The parameter contains data about the type of pool and the presence of encryption and its type.
 
-Разбирает значение побитово. Где первые 4 бита определяют схему подключения, а вторые 4 режим работы пула.
+Parses the value of the bitwise. Where the first 4 bits define the connection scheme, and the second 4 the mode of operation of the pool.
 
-Константы для определения схемы подключения:
+Constants for connection scheme definition:
 ```
    STRATUM_PROTO_TYPE_TCP   = 0b00000000000000000000000000000001
    STRATUM_PROTO_TYPE_SSL   = 0b00000000000000000000000000000010
@@ -316,7 +323,22 @@ ravinos.set_stats(stats)
 
 **ravinos.url_parse**(url)
 
-Принимает URL адрес пула. При необходимости добавляет схему для дальныйшего корректного 
-разбора адреса на составляющие.
+Accepts the pool URL. If necessary, adds a diagram for further correct parsing the address into components.
 
-Разбирает адрес и возвращает 6 компонентов URL как стандартная функция **urlparse**
+Parses the address and returns 6 URL components as a standard function**urlparse**
+
+**ravinos.info**(text)
+
+Writes the specified text to the log file
+
+**ravinos**.error(text)
+
+Writes the error text to the log and finishes the script execution
+
+**ravinos.get_by_type**(dev, type)
+
+Selects cards according to the type
+
+**ravinos.sort_devs**(devs, key)
+
+Sorts devices by the field specified in the key
