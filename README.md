@@ -1,6 +1,4 @@
-## Использование Custom mining в RaveOS.
-
-майнинга
+## Custom mining в RaveOS.
 
 The *RaveOS* allows you to use third-party algorithms for mining custom coins. Custom Mining requires:
 
@@ -19,8 +17,7 @@ The *RaveOS* allows you to use third-party algorithms for mining custom coins. C
     - Ewal template
     - URL template
     - Authorization type on the pool
-    - Data for authorization on the pool (address, Port, Wallet, username,
-        password, and so on.)
+    - Data for authorization on the pool (address, Port, Wallet, username, password, and so on.)
         
 Adding Custom Miner
 =======================
@@ -44,7 +41,7 @@ RAVINOS directory files
   "rev":1
 }
 ```
-Описание параметров конфигурации:
+Description of configuration options:
 ```GO
 {  
     "package":"",           // Package name (same as ZIP archive name)  
