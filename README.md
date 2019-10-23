@@ -130,7 +130,7 @@ YOUR CODE HERE
 ...  
 ravinos.set_stats(stats)
 ```
-*ИЛИ*
+*OR*
 ```python
 import ravinos  
 stats = ro.get_stats()  
