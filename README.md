@@ -109,8 +109,8 @@ ravinos.run(commandline)
       "memory_size":int64,          // Available memory size MPU
   ],
   "platform":string,                //
-  "user_config,omitempty":string,   // The content of a custom configuration file
-  "intensity,omitempty":string,     // Intensity (specified according to miner settings)
+  "user_config":string,             // The content of a custom configuration file
+  "intensity":string,               // Intensity (specified according to miner settings)
 }
 ```
 *All sequence numbers start with 0
@@ -153,14 +153,14 @@ ravinos.set_stats(stats)
         "type":string,                  // MPU type (AMD, NVIDIA)
         "hash_rate1":float64,           // hashrate of the first coin
         "hash_rate2":float64,           // hashrate of the second coin (if exist)
-        "temp,omitempty":int32,
+        "temp":int32,
         "shares": {                     // shares produced (by MPU)
         	"accepted": int,            // accepted shares
         	"invalid": int,             // invalid shares
         	"rejected": int,            // rejected shares
         }
     ]
-    "fans,omitempty":[
+    "fans":[
         "percent":int32,
         "rpm":int32,
     ]
@@ -326,7 +326,7 @@ Constants for connection scheme definition:
 
 Accepts the pool URL. If necessary, adds a scheme for further correct parsing the address into components.
 
-Parses the address and returns 6 URL components as a standard function**urlparse**
+Parses the address and returns 6 URL components as a standard function **urlparse**
 
 **ravinos.info**(text)
 
