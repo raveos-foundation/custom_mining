@@ -18,7 +18,7 @@ The *RaveOS* allows you to use third-party algorithms for mining custom coins. C
     - Wallet template
     - URL template
     - Pool authorization type
-    - Data for authorization on the pool (address, Port, Wallet, username, password, and so on.)
+    - Data for authorization on the pool (address, port, wallet, username, password, and so on.)
         
 How to add custom miner
 =======================
@@ -87,10 +87,10 @@ ravinos.run(commandline)
           "password": string,       // The pool password
           "pool_type": int,         // The type of a pool
       ],
-  "wallet id": int,                 // Wallet db id
-  "algo": string,                   // The algorithm of the coin
-  "coin_id": ing,                   // Coin db id
-  "name": string,                   // Coin short name
+      "wallet id": int,             // Wallet db id
+      "algo": string,               // The algorithm of the coin
+      "coin_id": ing,               // Coin db id
+      "name": string,               // Coin short name
   ],
   "work_dir": string,               // Current working directory
   "miner_dir": string,              // Directory of miner
@@ -119,7 +119,7 @@ ravinos.run(commandline)
 
 ### Script to get statistics **stats.py**
 
-Example of obtaining statistics *raw socket* **ravinos.get_socket_data** or *web*
+Example of getting statistics *raw socket* **ravinos.get_socket_data** or *web*
 **ravinos.get_http_data**:
 
 ```python
@@ -141,7 +141,7 @@ YOUR CODE HERE
 ...  
 ravinos.set_stats(stats)
 ```
-**ravinos.get_stats** the function gets a statistics object that should to return to the function **ravinos.set_stats**:
+**ravinos.get_stats** the function gets the statistics object to pass to the function **ravinos.set_stats**:
 ```GO
 {
     "mpu":[
@@ -240,12 +240,12 @@ For adding custom coin:
     ![](media/4.png)
 
 4. In the form that opens, fill in the data:
-```
+    ```
     -   Coin Name       // Coin name
     -   Short Name      // Coin short name
     -   Select algo     // Choose coin algo
-```
-Click **Save** (will become active after filling out the form)
+    ```
+5. Click **Save** (will become active after filling out the form)
     ![](media/5.png)
 
 If done correctly, the new coin will appear in the list on the current tab.
