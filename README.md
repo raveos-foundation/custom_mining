@@ -1,5 +1,5 @@
-## Custom mining in RaveOS.
-
+Custom mining in RaveOS
+=======================
 The *RaveOS* allows you to use third-party algorithms for mining custom coins. Custom Mining requires:
 
 1.  ZIP archive with miner, including:
